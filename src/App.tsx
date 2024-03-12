@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import styled from "@emotion/styled";
+import Main from "./pages/main";
+import Quiz from "./pages/quiz";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const AppBody = styled.div({
+	backgroundColor: 'white',
+	maxWidth: '1080px',
+	height: '100%',
+	margin: '0 auto',
+	borderRight: '1px solid rgb(233 235 238)',
+	borderLeft: '1px solid rgb(233 235 238)',
+	overflowY: 'auto',
+});
+
+const App = () => {
+	return (
+		<AppBody>
+			<BrowserRouter>
+				<Routes>
+					<Route index path="/" element={<Main />} />
+					<Route path="/quiz" element={<Quiz />} />
+				</Routes>
+			</BrowserRouter>
+		</AppBody>
+	);
 }
 
 export default App;

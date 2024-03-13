@@ -4,15 +4,15 @@ import styled from "@emotion/styled";
 import Main from "./pages/main";
 import Quiz from "./pages/quiz";
 
-const AppBody = styled.div({
-	backgroundColor: 'white',
-	maxWidth: '1080px',
-	height: '100%',
-	margin: '0 auto',
-	borderRight: '1px solid rgb(233 235 238)',
-	borderLeft: '1px solid rgb(233 235 238)',
-	overflowY: 'auto',
-});
+const AppBody = styled.div`
+	background-color: white;
+	max-width: 1080px;
+	height: 100%;
+	margin: 0 auto;
+	border-right: 1px solid rgb(233 235 238);
+	border-left: 1px solid rgb(233 235 238);
+	overflow-y: auto;
+`;
 
 const App = () => {
 	return (

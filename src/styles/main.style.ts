@@ -4,9 +4,11 @@ export const Wrapper = styled.div`
 	height: 100%;
 	display: flex;
 	gap: 20px;
+	padding: 0px 20px;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 `
 
 export const StartButton = styled.button`

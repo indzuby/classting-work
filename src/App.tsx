@@ -8,6 +8,7 @@ import Result from './pages/result'
 const AppBody = styled.div`
 	background-color: white;
 	max-width: 1080px;
+	width: 100%;
 	height: 100%;
 	margin: 0 auto;
 	border-right: 1px solid rgb(233 235 238);

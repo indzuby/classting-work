@@ -74,7 +74,7 @@ const Quiz = () => {
 				<S.ExplainWrapper>
 					<div dangerouslySetInnerHTML={{ __html: 'category: ' + quiz.category }} />
 					<div style={{ textAlign: "right" }}>
-						<div style={{ marginBottom: '10px' }}>퀴즈 진행 시간: {quizTime}초</div>
+						<div>퀴즈 진행 시간: {quizTime}초</div>
 						<div dangerouslySetInnerHTML={{ __html: 'dificutly: ' + quiz.difficulty }} />
 					</div>
 				</S.ExplainWrapper>

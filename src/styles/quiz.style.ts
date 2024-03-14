@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
 	height: 100%;
-	width: 800px;
+	max-width: 800px;
+	width: calc(100% - 40px);
+	padding: 0px 20px;
 	display: flex;
 	flex-direction: column;
 	// align-items: center;
@@ -36,6 +38,9 @@ export const ExplainWrapper = styled.div`
 	justify-content: space-between;
 	align-items: end;
 	width: 100%;
+	& > div {
+		max-width: 50%;
+	}
 `
 
 

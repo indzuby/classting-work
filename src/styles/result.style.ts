@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-	width: 800px;
+	max-width: 800px;
+	width: calc(100% - 40px);
 	display: flex;
 	flex-direction: column;
 	// align-items: center;
 	justify-content: center;
 	margin: 0 auto;
+	padding: 20px;
 	padding-bottom: 50px;
 `
 export const StartButton = styled.button`

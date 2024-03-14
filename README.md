@@ -35,4 +35,4 @@ styled-components\
 react-chartjs-2\
 recoil\
 recoil-persist\
-axios\
+axios

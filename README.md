@@ -31,8 +31,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### `library`
 
-styled-components
-react-chartjs-2
-recoil
-recoil-persist
-axios
+styled-components\
+react-chartjs-2\
+recoil\
+recoil-persist\
+axios\

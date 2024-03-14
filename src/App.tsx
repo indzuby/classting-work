@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import styled from "@emotion/styled";
 import Main from "./pages/main";
 import Quiz from "./pages/quiz";
+import Result from './pages/result'
 
 const AppBody = styled.div`
 	background-color: white;
@@ -21,6 +22,7 @@ const App = () => {
 				<Routes>
 					<Route index path="/" element={<Main />} />
 					<Route path="/quiz" element={<Quiz />} />
+					<Route path="/result" element={<Result />} />
 				</Routes>
 			</BrowserRouter>
 		</AppBody>

@@ -13,5 +13,6 @@ export type TQuiz = {
 	difficulty: string,
 	incorrect_answers: []
 	question: string,
-	type: string
+	type: string,
+	options?: [string]
 }

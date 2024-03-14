@@ -34,16 +34,24 @@ export const StartButton = styled(NextButton)`
 export const ExplainWrapper = styled.div`
 	display:flex;
 	justify-content: space-between;
+	align-items: end;
 	width: 100%;
 `
 
 
 export const OptionWrapper = styled.div`
 	display:flex;
-	width: 300px;
 	flex-direction: column;
 	gap: 10px;
 	> label {
+		display:flex;
+		gap: 10px;
+		align-items: center;
 		cursor: pointer;
+		height: 24px;
+		&.answer {
+			background-color: rgba(255, 99, 132, 0.2);
+			border-radius: 5px;
+		}
 	}
 `

@@ -1,18 +1,35 @@
 import { useNavigate } from "react-router-dom"
 import * as S from "../styles/main.style"
-import { useRecoilValueLoadable, useSetRecoilState } from "recoil"
-import { getQuizListState } from "../recoil/selectors/quiz"
-import { useEffect } from "react"
-
+import { useSetRecoilState } from "recoil"
+import { quizListState, quizStartTimeState, quizStepState, reviewNotesState } from "../recoil/atoms/quiz"
+import { getQuiz } from "../services/quiz"
+import { shuffle } from "../utils/list"
+import { TQuiz } from "../type/quiz"
 
 const Main = () => {
-	const setQuizList = useSetRecoilState(getQuizListState)
+	const setQuizList = useSetRecoilState(quizListState)
+	const setStartTime = useSetRecoilState(quizStartTimeState)
+	const setReviewNote = useSetRecoilState(reviewNotesState)
+	const setQuizStep = useSetRecoilState(quizStepState)
 	const navigate = useNavigate()
 
 
 	const startQuiz = async () => {
-		setQuizList([])
-		navigate('/quiz?step=1')
+		const { data } = await getQuiz()
+		const list: [TQuiz] = data.results
+		if (Array.isArray(list)) {
+			setQuizList(list.map(it => ({
+				...it,
+				options: shuffle([it.correct_answer, ...it.incorrect_answers])
+			})))
+			setReviewNote(list.map((it, index) => ({
+				id: index + 1,
+				answer: ''
+			})))
+		}
+		setQuizStep(1)
+		setStartTime(new Date().getTime())
+		navigate('/quiz')
 	}
 	return (
 		<S.Wrapper>

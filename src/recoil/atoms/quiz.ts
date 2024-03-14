@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { quizStatusCode } from "../../type/quiz";
+import { TQuiz } from "../../type/quiz";
 
 
 const { persistAtom } = recoilPersist({
@@ -9,14 +9,33 @@ const { persistAtom } = recoilPersist({
 })
 
 
-export const quizListState = atom({
+export const quizListState = atom<TQuiz[]>({
 	key: 'quizListState',
 	default: [],
 	effects_UNSTABLE: [persistAtom]
 })
 
 
-export const quizStatusState = atom({
-	key: 'quizStatusState',
-	default: quizStatusCode.start
+export const reviewNotesState = atom<{ id: number, answer: string }[]>({
+	key: 'reviewNotesState',
+	default: [],
+	effects_UNSTABLE: [persistAtom]
+})
+
+export const quizStartTimeState = atom({
+	key: 'quizStartTimeState',
+	default: 0,
+	effects_UNSTABLE: [persistAtom]
+})
+
+export const quizEndTimeState = atom({
+	key: 'quizEndTimeState',
+	default: 0,
+	effects_UNSTABLE: [persistAtom]
+})
+
+export const quizStepState = atom({
+	key: 'quizStep',
+	default: 1,
+	effects_UNSTABLE: [persistAtom]
 })

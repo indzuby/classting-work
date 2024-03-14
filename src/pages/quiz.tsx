@@ -1,50 +1,63 @@
-import { useRecoilStateLoadable } from "recoil"
-import { getQuizListState } from "../recoil/selectors/quiz"
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
+import { useNavigate } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react"
 import * as S from "../styles/quiz.style"
 import { TQuiz } from "../type/quiz"
 import { shuffle } from "../utils/list"
+import { quizEndTimeState, quizListState, quizStartTimeState, quizStepState, reviewNotesState } from "../recoil/atoms/quiz"
+import { getOverSecond } from "../utils/time"
 
-
+import QuizItem from "../components/quizItem"
 
 const Quiz = () => {
 	const navigate = useNavigate()
-	const [step, setStep] = useState(1)
-	const [{ state, contents: list }, setQuizList] = useRecoilStateLoadable(getQuizListState)
+	const [step, setStep] = useRecoilState(quizStepState)
+	const [reviewNote, setReviewNote] = useRecoilState(reviewNotesState)
+	const startTime = useRecoilValue(quizStartTimeState)
+	const setEndTime = useSetRecoilState(quizEndTimeState)
+	const [list] = useRecoilState(quizListState)
 	const [quiz, setQuiz] = useState<TQuiz>()
-	const [options, setOptions] = useState<[string]>()
 	const [selected, setSelected] = useState<string>()
-
-	useEffect(() => {
-		if (state === 'hasValue') {
-			setQuizList(list)
-		}
-	}, [state, list, setQuizList, setQuiz])
+	const [quizTime, setQuizTime] = useState<number>()
 
 	useEffect(() => {
 		setQuiz(list[step - 1])
-	}, [step, list, setQuiz])
+	}, [step, list, setQuiz, setReviewNote])
 
 	useEffect(() => {
-		if (quiz) {
-			setOptions(shuffle([quiz.correct_answer, ...quiz.incorrect_answers]))
-		}
-	}, [quiz, setOptions])
+		const timer = setInterval(() => {
+			setQuizTime(getOverSecond(startTime))
+		}, 1000)
+		return () => clearInterval(timer)
+	}, [setQuizTime, startTime])
 
-	const onSubmit = useCallback(async () => {
-		if (quiz?.correct_answer === selected) {
+	const setAnswer = useCallback((selected: string) => {
+		let newNote = [...reviewNote].map(it => it.id === step ? {
+			id: step,
+			answer: selected
+		} : it)
+		setReviewNote(newNote)
+	}, [setReviewNote, step, reviewNote])
+
+	const onSubmit = useCallback(() => {
+		if (!selected) {
+			alert('정답을 선택해주세요.')
+			return
+		}
+		else if (quiz?.correct_answer === selected) {
 			alert('정답입니다.')
 		} else {
 			alert('오답입니다.')
 		}
+		setAnswer(selected as string)
 		setSelected('')
 		if (step === 10) {
-
+			setEndTime(new Date().getTime())
+			navigate('/result')
 		} else {
 			setStep(step + 1)
 		}
-	}, [selected, quiz, step, setStep])
+	}, [selected, quiz, step, setStep, setAnswer, navigate, setEndTime])
 
 	const onChangeSelected = useCallback((value: string) => {
 		setSelected(value)
@@ -52,7 +65,7 @@ const Quiz = () => {
 
 	const onStartClick = useCallback(() => {
 		if (window.confirm('첫 페이지로 돌아가시겠습니까?'))
-			navigate(-1)
+			navigate('/')
 	}, [navigate])
 
 	return <S.Wrapper>
@@ -60,18 +73,15 @@ const Quiz = () => {
 			<>
 				<S.ExplainWrapper>
 					<div dangerouslySetInnerHTML={{ __html: 'category: ' + quiz.category }} />
-					<div dangerouslySetInnerHTML={{ __html: 'dificutly: ' + quiz.difficulty }} />
+					<div style={{ textAlign: "right" }}>
+						<div style={{ marginBottom: '10px' }}>퀴즈 진행 시간: {quizTime}초</div>
+						<div dangerouslySetInnerHTML={{ __html: 'dificutly: ' + quiz.difficulty }} />
+					</div>
 				</S.ExplainWrapper>
-				<h2 dangerouslySetInnerHTML={{ __html: `${step}. ${quiz.question}` }} />
-				<S.OptionWrapper>
-					{options?.map((op, i) => (
-						<label key={i}><input type="radio" name="options" value={op} checked={op === selected} onChange={(e) => onChangeSelected(e.target.value)} /> <span dangerouslySetInnerHTML={{ __html: op }}></span></label>
-					))
-					}
-				</S.OptionWrapper>
+				<QuizItem step={step} quiz={quiz} selected={selected} onChangeSelected={onChangeSelected} />
 				<S.ExplainWrapper style={{ marginTop: '50px' }}>
-					<S.NextButton onClick={onSubmit}>제출</S.NextButton>
 					<S.StartButton onClick={onStartClick}>처음으로</S.StartButton>
+					<S.NextButton onClick={onSubmit}>제출</S.NextButton>
 				</S.ExplainWrapper>
 			</>
 		}

@@ -19,7 +19,7 @@ const Main = () => {
 
 	const startQuiz = async () => {
 		setLoading(true)
-		const { data } = await getQuiz()
+		const data = await getQuiz()
 		setLoading(false)
 		const list: [TQuiz] = data.results
 		if (Array.isArray(list)) {

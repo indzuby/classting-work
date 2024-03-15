@@ -41,13 +41,13 @@ const Quiz = () => {
 
 	const onSubmit = useCallback(() => {
 		if (!selected) {
-			alert('정답을 선택해주세요.')
+			window.alert('정답을 선택해주세요.')
 			return
 		}
 		else if (quiz?.correct_answer === selected) {
-			alert('정답입니다.')
+			window.alert('정답입니다.')
 		} else {
-			alert('오답입니다.')
+			window.alert('오답입니다.')
 		}
 		setAnswer(selected as string)
 		setSelected('')

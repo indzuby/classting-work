@@ -8,12 +8,12 @@ const ReviewNote = () => {
 	const onChangeSelected = () => {
 
 	}
-	return <>
+	return <div>
 		<h2>오답 노트</h2>
 		{list.map((quiz, index) => (
-			<QuizItem isReview step={index + 1} quiz={quiz} selected={reviewNote[index].answer} onChangeSelected={onChangeSelected} />
+			<QuizItem key={index + 1} isReview step={index + 1} quiz={quiz} selected={reviewNote[index].answer} onChangeSelected={onChangeSelected} />
 		))}
-	</>
+	</div>
 }
 
 export default ReviewNote

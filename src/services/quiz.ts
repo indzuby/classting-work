@@ -1,5 +1,5 @@
-import axios from "axios"
 
 export const getQuiz = async () => {
-	return await axios.get('https://opentdb.com/api.php?amount=10&type=multiple')
+	const response = await fetch('https://opentdb.com/api.php?amount=10&type=multiple').then((response) => response.json())
+	return response
 }
